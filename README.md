@@ -2,18 +2,22 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Application Purpose
+
+This application utilizes The Rick and Morty API to display characters and their specs. Users will be able to explore various characters from the show, view their details, and learn more about their traits and backgrounds.
+
 ## Get started
 
 1. Install dependencies
 
    ```bash
-   npm install
+   yarn install
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
 In the output, you'll find options to open the app in a
