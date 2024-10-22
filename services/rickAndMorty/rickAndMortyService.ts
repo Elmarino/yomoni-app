@@ -1,28 +1,45 @@
 import ApiService from '../apiService';
+import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the import path as necessary
+import { Location } from '@/types/RickAndMortyTypes/Location'; // Adjust the import path as necessary
+import { Episode } from '@/types/RickAndMortyTypes/Episode'; // Adjust the import path as necessary
 
 const apiService = new ApiService('https://rickandmortyapi.com/api');
 
-// Fonction pour récupérer tous les personnages
-export const getAllCharacters = async (page: number = 1): Promise<any[]> => {
-  return apiService.get<any[]>(`/character`);
+// Function to retrieve all characters
+export const getAllCharacters = async (
+  page: number = 1
+): Promise<{ info: any; results: Character[] }> => {
+  return apiService.get<{ info: any; results: Character[] }>(
+    `/character?page=${page}`
+  );
 };
 
-// Fonction pour récupérer un personnage par ID
-export const getCharacterById = async (id: number): Promise<any> => {
-  return apiService.get<any>(`/character/${id}`);
+// Function to retrieve a character by ID
+export const getCharacterById = async (id: number): Promise<Character> => {
+  return apiService.get<Character>(`/character/${id}`);
 };
 
-// Fonction pour récupérer des personnages par un filtre
-export const getCharactersByName = async (name: string): Promise<any[]> => {
-  return apiService.get<any[]>(`/character/?name=${name}`);
+// Function to retrieve characters by name filter
+export const getCharactersByName = async (
+  name: string
+): Promise<{ info: any; results: Character[] }> => {
+  return apiService.get<{ info: any; results: Character[] }>(
+    `/character/?name=${name}`
+  );
 };
 
-// Fonction pour récupérer les emplacements des personnages
-export const getCharacterLocations = async (): Promise<any[]> => {
-  return apiService.get<any[]>(`/location`);
+// Function to retrieve all locations
+export const getCharacterLocations = async (): Promise<{
+  info: any;
+  results: Location[];
+}> => {
+  return apiService.get<{ info: any; results: Location[] }>(`/location`);
 };
 
-// Fonction pour récupérer les épisodes des personnages
-export const getCharacterEpisodes = async (): Promise<any[]> => {
-  return apiService.get<any[]>(`/episode`);
+// Function to retrieve all episodes
+export const getCharacterEpisodes = async (): Promise<{
+  info: any;
+  results: Episode[];
+}> => {
+  return apiService.get<{ info: any; results: Episode[] }>(`/episode`);
 };

@@ -4,7 +4,7 @@ import {
   getAllCharacters,
   getCharactersByName
 } from '@/services/rickAndMorty/rickAndMortyService';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -21,11 +21,20 @@ const Index = () => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
+  useEffect(() => {
+    console.log('fire !');
+  }, []);
+
+  const getAllCharacters = async () => {
+    const characters: any = await getAllCharacters();
+    return characters;
+  };
+
   const submitSearch = async (query: string) => {
     try {
       console.log(query);
       const characters = await getCharactersByName(query);
-      console.log('DODODODO', characters.results.length);
+      console.log(characters.results.length);
     } catch (error) {
       console.error('Error fetching characters:', error);
     }
@@ -33,7 +42,6 @@ const Index = () => {
 
   const DATA = [
     { id: '1', title: 'Card 1' },
-
     { id: '2', title: 'Card 2' },
     { id: '3', title: 'Card 3' },
     { id: '4', title: 'Card 4' },
