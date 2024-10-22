@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "index.js",
     "name": "yomoni-app",
     "slug": "yomoni-app",
     "version": "1.0.0",
@@ -13,7 +14,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.elmar.yomoniapp",
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": true
+      }
     },
     "android": {
       "adaptiveIcon": {
