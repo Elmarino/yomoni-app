@@ -1,4 +1,3 @@
-import ApiService from '../apiService';
 import { getCharacterById } from './rickAndMortyService';
 
 // Mock the global fetch function

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import GoBackButton from '@/components/ui/GoBackButton';
 import Button from '@/components/ui/Button';
 
 interface CharacterDetailScreenProps {

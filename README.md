@@ -14,6 +14,8 @@ This application utilizes The Rick and Morty API to display characters and their
 > EXPO_PUBLIC_API_RICK_AND_MORTY_URL=https://rickandmortyapi.com/api
 > ```
 
+> **Note:** Ensure that Prettier is enabled with the configuration provided in the `.prettierrc` file from this project to maintain consistent code formatting.
+
 ## Get started
 
 1. Install dependencies

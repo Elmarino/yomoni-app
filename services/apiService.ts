@@ -1,4 +1,3 @@
-// apiService.ts
 class ApiService {
   private baseURL: string;
   private timeout: number;
@@ -46,9 +45,9 @@ class ApiService {
         ...options,
         headers: {
           'Content-Type': 'application/json',
-          ...options.headers,
+          ...options.headers
         },
-        signal,
+        signal
       });
 
       if (!response.ok) {

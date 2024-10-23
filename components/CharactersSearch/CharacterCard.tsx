@@ -1,6 +1,13 @@
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import Badge from '../ui/Badge';
 
+/**
+ * CharacterCard component displays a brief overview of a character,
+ * including their name, image, and status. It is designed to be
+ * interactive, allowing users to press the card to view more details
+ * about the character.
+ */
+
 interface CardProps {
   title: string;
   imageBackgroud: string;

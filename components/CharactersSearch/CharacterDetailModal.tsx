@@ -2,6 +2,12 @@ import React from 'react';
 import { Modal, View, Text, Image, Button } from 'react-native';
 import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the import path as necessary
 
+/**
+ * CharacterDetailModal component displays detailed information about a character
+ * in a modal format. It shows the character's name, status, species, gender,
+ * origin, location, and creation date.
+ */
+
 interface CharacterDetailModalProps {
   visible: boolean;
   character: Character | null;

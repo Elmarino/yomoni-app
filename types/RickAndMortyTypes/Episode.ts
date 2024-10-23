@@ -1,4 +1,3 @@
-// types/Episode.ts
 export interface Episode {
   id: number;
   name: string;

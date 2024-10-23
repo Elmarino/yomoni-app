@@ -1,8 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
-import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the import path as necessary
-import { RouteProp, useNavigation } from '@react-navigation/native';
-import Ionicons from '@expo/vector-icons/Ionicons'; // Ensure this import is present
+import { View, Text, Image } from 'react-native';
 import GoBackButton from '@/components/ui/GoBackButton';
 import { isMobile } from '@/globals/constants';
 
@@ -19,7 +16,6 @@ const colorMap: Record<string, string> = {
 const CharacterDetailScreen: React.FC<CharacterDetailScreenProps> = ({
   route
 }) => {
-  const navigation = useNavigation();
   const { character } = route.params;
   const backgroundColor = character
     ? colorMap[character.status.toLowerCase()] || 'bg-gray-500'

@@ -1,7 +1,7 @@
 import ApiService from '../apiService';
-import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the import path as necessary
-import { Location } from '@/types/RickAndMortyTypes/Location'; // Adjust the import path as necessary
-import { Episode } from '@/types/RickAndMortyTypes/Episode'; // Adjust the import path as necessary
+import { Character } from '@/types/RickAndMortyTypes/Character';
+import { Location } from '@/types/RickAndMortyTypes/Location';
+import { Episode } from '@/types/RickAndMortyTypes/Episode';
 
 const apiService = new ApiService(
   process.env.EXPO_PUBLIC_API_RICK_AND_MORTY_URL || ''
