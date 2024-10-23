@@ -50,6 +50,7 @@ const HomeScreen = () => {
   const [query, setQuery] = useState('');
   const [filterModalOpened, setfilterModalOpened] = useState(false);
   const [searchResults, setSearchResults] = useState<Character[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -58,8 +59,10 @@ const HomeScreen = () => {
   }, []);
 
   const getFirstList = async () => {
+    setLoading(true);
     const characters = await getAllCharacters();
     setSearchResults(characters.results);
+    setLoading(false);
   };
 
   const handleQueryChange = (text: string) => {
@@ -69,17 +72,18 @@ const HomeScreen = () => {
 
   const submitSearch = async (query: string) => {
     try {
-      if (query == '') {
+      if (query === '') {
         Alert.alert('Research field empty');
         return;
       }
       const characters = await getCharactersByName(query);
       setSearchResults(characters.results);
     } catch (error) {
-      //Showing empty list if error
+      // Showing empty list if error
       setSearchResults([]);
     }
   };
+
   const toggleModal = (type: 'filter') => {
     if (type === 'filter') {
       setfilterModalOpened((prevFilterModalOpened) => !prevFilterModalOpened);
@@ -95,6 +99,22 @@ const HomeScreen = () => {
         navigation.navigate('Details', { character: item })
       }
     />
+  );
+
+  const renderLoadingPlaceholder = () => (
+    // Render placeholder cards while loading - hidden for large screens due to many elements causing visual "twitch"
+    <View className="flex flex-row flex-wrap lg:hidden">
+      {Array.from({ length: 15 }).map((_, index) => (
+        <View key={index} className={`w-1/2 md:w-1/4 lg:w-1/5 h-64 opacity-70`}>
+          <CharacterCard
+            title=""
+            imageBackgroud="https://rickandmortyapi.com/api/character/avatar/19.jpeg"
+            status=""
+            onPressFunction={() => {}}
+          />
+        </View>
+      ))}
+    </View>
   );
 
   const renderEmptyComponent = () => (
@@ -134,18 +154,20 @@ const HomeScreen = () => {
         keyExtractor={(item) => item.id.toString()}
         horizontal={false}
         numColumns={
-          Dimensions.get('window').width > 1025
+          Dimensions.get('window').width > 1024
             ? 5
-            : Dimensions.get('window').width > 998
+            : Dimensions.get('window').width > 997
               ? 4
               : 2
         }
         initialNumToRender={12}
         className="bg-zinc-900 w-full p-4 flex-1 pt-10"
         contentContainerStyle={{ marginHorizontal: 10, paddingBottom: 200 }}
-        ListEmptyComponent={renderEmptyComponent}
+        ListEmptyComponent={
+          loading ? renderLoadingPlaceholder : renderEmptyComponent
+        }
         refreshControl={
-          <RefreshControl onRefresh={getFirstList} refreshing={true} />
+          <RefreshControl onRefresh={getFirstList} refreshing={loading} />
         }
       />
       {!isWebAndLargeScreen && (
