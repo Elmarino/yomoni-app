@@ -133,7 +133,13 @@ const HomeScreen = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         horizontal={false}
-        numColumns={Dimensions.get('window').width > 998 ? 4 : 2}
+        numColumns={
+          Dimensions.get('window').width > 1025
+            ? 5
+            : Dimensions.get('window').width > 998
+              ? 4
+              : 2
+        }
         initialNumToRender={12}
         className="bg-zinc-900 w-full p-4 flex-1 pt-10"
         contentContainerStyle={{ marginHorizontal: 10, paddingBottom: 200 }}
