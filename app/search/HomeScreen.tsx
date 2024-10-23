@@ -120,6 +120,13 @@ const HomeScreen = () => {
             <Text className="text-sm text-center font-bold text-white mb-3 md:text-xl">
               Dead or alive ?
             </Text>
+            {isWebAndLargeScreen && (
+              <SearchComponent
+                query={query}
+                setQuery={handleQueryChange}
+                onSearch={submitSearch}
+              />
+            )}
           </View>
         }
         data={searchResults}
@@ -142,7 +149,14 @@ const HomeScreen = () => {
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               className="p-5 justify-center items-center absolute bottom-1 w-full"
             >
-              <View className=" w-full"></View>
+              <View className=" w-full">
+                <SearchComponent
+                  query={query}
+                  setQuery={setQuery}
+                  onSearch={submitSearch}
+                  openCloseModal={() => toggleModal('filter')}
+                />
+              </View>
             </KeyboardAvoidingView>
           </>
         </TouchableWithoutFeedback>
