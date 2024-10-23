@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   FlatList,
   Image,
   Keyboard,
@@ -21,6 +22,8 @@ import {
 } from '@/services/rickAndMorty/rickAndMortyService';
 import { Character } from '@/types/RickAndMortyTypes/Character';
 import CharacterDetailModal from '@/components/CharactersSearch/CharacterDetailModal';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface CardData {
   id: number;
@@ -51,6 +54,7 @@ const HomeScreen = () => {
     null
   );
   const [characterModalOpened, setCharacterModalOpened] = useState(false);
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
     getFirstList();
@@ -74,18 +78,9 @@ const HomeScreen = () => {
       setSearchResults([]);
     }
   };
-  const toggleModal = (type: 'filter' | 'character', character?: Character) => {
+  const toggleModal = (type: 'filter') => {
     if (type === 'filter') {
       setfilterModalOpened((prevFilterModalOpened) => !prevFilterModalOpened);
-    } else if (type === 'character') {
-      if (character) {
-        // Check if character is defined
-        setSelectedCharacter(character);
-        setCharacterModalOpened(true);
-      } else {
-        setSelectedCharacter(null); // Set to null if character is undefined
-        setCharacterModalOpened(false);
-      }
     }
   };
 
@@ -94,7 +89,9 @@ const HomeScreen = () => {
       title={item.name}
       imageBackgroud={item.image}
       status={item.status}
-      onPressFunction={() => toggleModal('character', item)}
+      onPressFunction={() =>
+        navigation.navigate('Details', { character: item })
+      }
     />
   );
 
@@ -109,11 +106,6 @@ const HomeScreen = () => {
       <FilterModal
         handleDisplay={() => toggleModal('filter')}
         visible={filterModalOpened}
-      />
-      <CharacterDetailModal
-        visible={characterModalOpened}
-        character={selectedCharacter}
-        handleDisplay={() => toggleModal('character')}
       />
       <FlatList
         ListHeaderComponent={() => (
@@ -132,7 +124,7 @@ const HomeScreen = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         horizontal={false}
-        numColumns={2}
+        numColumns={Dimensions.get('window').width > 998 ? 4 : 2}
         initialNumToRender={12}
         className="bg-zinc-900 w-full p-4 flex-1 pt-10"
         contentContainerStyle={{ marginHorizontal: 10, paddingBottom: 200 }}
@@ -145,7 +137,7 @@ const HomeScreen = () => {
         <>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            className="p-5 justify-center items-center absolute bottom-0 w-full"
+            className="p-5 justify-center items-center absolute bottom-1 w-full"
           >
             <View className=" w-full">
               <SearchComponent

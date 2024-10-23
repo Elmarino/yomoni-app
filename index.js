@@ -1,5 +1,10 @@
 import { registerRootComponent } from 'expo';
 import App from './App'
+import { NativeWindStyleSheet } from 'nativewind';
 
+// Set NativeWind output for web
+NativeWindStyleSheet.setOutput({
+    default: 'native',
+});
 
-export default registerRootComponent(App);
+registerRootComponent(App);
