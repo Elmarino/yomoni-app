@@ -21,9 +21,9 @@ import {
   getCharactersByName
 } from '@/services/rickAndMorty/rickAndMortyService';
 import { Character } from '@/types/RickAndMortyTypes/Character';
-import CharacterDetailModal from '@/components/CharactersSearch/CharacterDetailModal';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { isWebAndLargeScreen } from '@/globals/constants';
 
 interface CardData {
   id: number;
@@ -50,10 +50,7 @@ const HomeScreen = () => {
   const [query, setQuery] = useState('');
   const [filterModalOpened, setfilterModalOpened] = useState(false);
   const [searchResults, setSearchResults] = useState<Character[]>([]);
-  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
-    null
-  );
-  const [characterModalOpened, setCharacterModalOpened] = useState(false);
+
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
@@ -63,6 +60,11 @@ const HomeScreen = () => {
   const getFirstList = async () => {
     const characters = await getAllCharacters();
     setSearchResults(characters.results);
+  };
+
+  const handleQueryChange = (text: string) => {
+    console.log('text', text);
+    setQuery(text);
   };
 
   const submitSearch = async (query: string) => {
@@ -108,18 +110,18 @@ const HomeScreen = () => {
         visible={filterModalOpened}
       />
       <FlatList
-        ListHeaderComponent={() => (
-          <View className="pb-2">
+        ListHeaderComponent={
+          <View className="pb-2 w-full">
             <Image
               resizeMode={'contain'}
-              className="w-full self-center h-14"
+              className="self-center h-14 md:h-32"
               source={require('@/assets/images/rick-and-morty.png')}
             />
-            <Text className="text-sm text-center font-bold text-white">
+            <Text className="text-sm text-center font-bold text-white mb-3 md:text-xl">
               Dead or alive ?
             </Text>
           </View>
-        )}
+        }
         data={searchResults}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
@@ -133,23 +135,18 @@ const HomeScreen = () => {
           <RefreshControl onRefresh={getFirstList} refreshing={true} />
         }
       />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            className="p-5 justify-center items-center absolute bottom-1 w-full"
-          >
-            <View className=" w-full">
-              <SearchComponent
-                query={query}
-                setQuery={setQuery}
-                onSearch={submitSearch}
-                openCloseModal={() => toggleModal('filter')}
-              />
-            </View>
-          </KeyboardAvoidingView>
-        </>
-      </TouchableWithoutFeedback>
+      {!isWebAndLargeScreen && (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              className="p-5 justify-center items-center absolute bottom-1 w-full"
+            >
+              <View className=" w-full"></View>
+            </KeyboardAvoidingView>
+          </>
+        </TouchableWithoutFeedback>
+      )}
     </>
   );
 };

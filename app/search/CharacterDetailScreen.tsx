@@ -3,6 +3,8 @@ import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the import path as necessary
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons'; // Ensure this import is present
+import GoBackButton from '@/components/ui/GoBackButton';
+import { isMobile } from '@/globals/constants';
 
 interface CharacterDetailScreenProps {
   route: any;
@@ -27,13 +29,7 @@ const CharacterDetailScreen: React.FC<CharacterDetailScreenProps> = ({
     <View
       className={`flex-1 justify-center items-center p-4 ${backgroundColor}`}
     >
-      <TouchableOpacity
-        className="absolute top-14 left-4 flex-row items-center"
-        onPress={() => navigation.goBack()}
-      >
-        <Ionicons name="arrow-back" size={30} color="black" />
-        <Text className="ml-2 text-lg font-semibold text-black">Back</Text>
-      </TouchableOpacity>
+      {isMobile && <GoBackButton />}
       <View className="flex flex-col items-start pt-10 pb-5 px-10 bg-white rounded-lg w-full">
         <View
           className="flex flex-row justify-between items-center
@@ -43,7 +39,7 @@ const CharacterDetailScreen: React.FC<CharacterDetailScreenProps> = ({
             source={{ uri: character.image }}
             className="w-32 h-32 rounded-lg"
           />
-          <Text className="text-xl font-bold text-gray-900 ml-4 w-1/2 break-words text-center">
+          <Text className="text-xl font-bold text-gray-900 ml-4 w-1/2 break-words text-center md:text-3xl">
             {character.name}
           </Text>
         </View>

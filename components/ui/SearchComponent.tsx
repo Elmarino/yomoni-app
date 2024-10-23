@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, Text, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, Text, Keyboard } from 'react-native';
 import GenericButton from './Button';
 
 interface SearchComponentProps {
@@ -21,6 +21,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 }) => {
   const submitSearch = () => {
     onSearch(query);
+    Keyboard.dismiss();
   };
 
   return (
@@ -33,8 +34,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         <TextInput
           className={`flex-1 border border-gray-100 bg-white text-black rounded-md p-2 h-10 leading-4 ${openCloseModal ? 'mx-2' : 'mr-2'} `}
           value={query}
-          onChangeText={setQuery}
+          onChangeText={(text) => setQuery(text)}
           placeholder={placeholder}
+          placeholderTextColor="#333"
+          onSubmitEditing={submitSearch}
+          returnKeyType="search"
         />
         <GenericButton onPress={submitSearch} icon="search" />
       </View>

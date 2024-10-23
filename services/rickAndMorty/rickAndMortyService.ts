@@ -3,7 +3,9 @@ import { Character } from '@/types/RickAndMortyTypes/Character'; // Adjust the i
 import { Location } from '@/types/RickAndMortyTypes/Location'; // Adjust the import path as necessary
 import { Episode } from '@/types/RickAndMortyTypes/Episode'; // Adjust the import path as necessary
 
-const apiService = new ApiService('https://rickandmortyapi.com/api');
+const apiService = new ApiService(
+  process.env.EXPO_PUBLIC_API_RICK_AND_MORTY_URL || ''
+);
 
 // Function to retrieve all characters
 export const getAllCharacters = async (
